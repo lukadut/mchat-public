@@ -1,0 +1,55 @@
+<config>
+    <timeout></timeout>
+    <header></header>
+    <homepage>
+        <address></address>
+    </homepage>
+    <loginpage>
+        <address></address>
+        <validate>
+            <element optional="false" type="ok" message="Invalid login page"></element>
+            <element optional="true" type="error" message="Captcha required"></element>
+        </validate>
+        <request></request>
+        <response>
+            <errors>
+                <element message="Too many failed login attempts"></element>
+                <element message="Invalid login or password"></element>
+                <element message="You have been banned"></element>
+            </errors>
+            <ok>
+                <element></element>
+                <element></element>
+            </ok>
+        </response>
+    </loginpage>
+    <chatpage>
+        <address></address>
+        <add>
+            <data></data>
+        </add>
+        <read>
+            <data></data>
+        </read>
+        <archive>
+            <data></data>
+            <errors>
+                <element message="You have no permission"></element>
+            </errors>
+        </archive>
+        <chatmessage>
+            <message></message>
+            <messageid></messageid>
+            <avatar></avatar>
+            <user></user>
+            <time></time>
+            <content></content>
+        </chatmessage>
+    </chatpage>
+    <emoticons>
+        <address></address>
+        <emoticon></emoticon>
+        <code></code>
+        <image></image>
+    </emoticons>
+</config>

@@ -1,0 +1,101 @@
+<config>
+    <timeout>5</timeout>
+    <header>
+        {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Encoding":"gzip, deflate, sdch",
+        "Accept-Language":"pl-PL,pl;q=0.8,en-US;q=0.6,en;q=0.4",
+        "Connection":"keep-alive",
+        "Host":"southperry.eu",
+        "Origin":"http://southperry.eu",
+        "Referer":"http://southperry.eu/",
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)Chrome/55.0.2883.87 Safari/537.36"}
+    </header>
+    <homepage>
+        <address>http://southperry.eu</address>
+    </homepage>
+    <loginpage>
+        <address>http://southperry.eu/ucp.php?mode=login</address>
+        <validate>
+            <element required="true" type="ok" message="Invalid login page">
+                .//*[@id="wrapcentre"]/form/table//td//b[contains(.,"Nazwa")]/parent::*/parent::*//input
+            </element>
+            <element required="true" type="ok" message="Invalid login page">
+                .//*[@id="wrapcentre"]/form/table//td//b[contains(.,"Has")]/parent::*/parent::*//input
+            </element>
+            <element required="false" type="error" message="Captcha required" captcha="question">
+                .//*[@id="wrapcentre"]/form/table[2]//tr[2]/td[1]/b/text()
+            </element>
+        </validate>
+        <request>
+            {"username":"{{login}}","login":"Zaloguj","password":"{{password}}","autologin":"on"}
+        </request>
+        <response>
+            <errors>
+                <element message="Invalid login or password">
+                    .//*[@id="wrapcentre"]/form/table//td//b[contains(.,"Nazwa")]/parent::*/parent::*//input
+                </element>
+                <element message="Invalid login or password">
+                    .//*[@id="wrapcentre"]/form/table//td//b[contains(.,"Has")]/parent::*/parent::*//input
+                </element>
+                <element message="Too many failed login attempts. You have to visit website to unlock account by solving captcha.">
+                    .//*[@id="wrapcentre"]/form/table[2]//tr[2]/td[1]/b/text()
+                </element>
+                <element message="Too many failed login attempts. You have to visit website to unlock account by solving captcha.">
+                    .//*[@id="confirm_id"]/@value
+                </element>
+                <element message="Too many failed login attempts. You have to visit website to unlock account by solving captcha.">
+                    .//*[@id="wrapcentre"]/form/table//*[@class="error" and contains(.,"limit błędnych prób")]
+                </element>
+                <element message="Invalid login or password">
+                    .//*[@id="wrapcentre"]/form/table//*[@class="error" and contains(.,"nieprawidłowe hasło")]
+                </element>
+                <element message="You have been banned">
+                    .//*[@id="wrapcentre"]/table[2]//*[contains(.,"wyrzucony z tego forum")]
+                </element>
+            </errors>
+            <ok>
+                <element>.//*[@id="wrapcentre"]/table[2]//tr[2]//*[contains(.,"Zalogowałeś")]</element>
+                <element>.//*[@id="login"][contains(.,"Wyloguj")]</element>
+            </ok>
+        </response>
+    </loginpage>
+    <chatpage>
+        <address>http://southperry.eu/mchat.php</address>
+        <add>
+            <data>
+                {"mode":"add","message":"{{message}}"}
+            </data>
+        </add>
+        <read>
+            <address>http://southperry.eu/mchat.php?mode=read&amp;message_last_id={{messageid}}</address>
+        </read>
+        <archive>
+            <address>http://southperry.eu/mchat.php?mode=archive&amp;start={{readmessages}}</address>
+        </archive>
+        <errors>
+            <element message="Invalid session">
+                .//*[@id="wrapcentre"]/table[2]//tr[2]/td/p[contains(.,"Nie posiadasz")]
+            </element>
+        </errors>
+        <chatmessage>
+            <message>
+                .//div[contains(@id,"mess")]
+            </message>
+            <messageid>
+                substring-after(./@id,'mess')
+            </messageid>
+            <avatar>
+                .//img/@src[1]
+            </avatar>
+            <user>
+                .//div[2]/span[1]/a[last()]/text()
+            </user>
+            <time>
+                substring-after(.//div[2]/span[1]/text()[normalize-space()][last()],'- ')
+            </time>
+            <content>
+                .//div[contains(@class,'mChatMessage')]
+            </content>
+        </chatmessage>
+    </chatpage>
+</config>

@@ -1,0 +1,33 @@
+
+<ion-view view-title="MChat {{mchatCtrl.address}}" ng-controller="MChatController as mchatCtrl" ng-init="mchatCtrl.init()">
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click="mchatCtrl.getNewMessages()">
+      <i class="ion-refresh"></i> Refresh
+    </button>
+    <button class="button" ng-click="mchatCtrl.logOut()">
+      <i class="ion-android-exit"></i> Log out
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="has-footer">
+    <ion-refresher
+      pulling-text="Pull to load older messages"
+      on-refresh="mchatCtrl.getArchiveMessages()">
+    </ion-refresher>
+    <ion-scroll overflow-scroll="true">
+      <m-chat-message ng-repeat="message in mchatCtrl.messages" message="message">
+      </m-chat-message>
+    </ion-scroll>
+  </ion-content>
+  <div class="bar bar-footer">
+    <form name="newMessageForm" ng-submit="mchatCtrl.sendNewMessage()">
+
+      <input type="text" ng-model="mchatCtrl.newMessageText" required ng-click="mchatCtrl.scrollToBottom()">
+      <button class="button button-stable" ng-disabled="newMessageForm.$invalid">
+        Send
+      </button>
+    </form>
+
+
+  </div>
+
+</ion-view>

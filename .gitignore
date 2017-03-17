@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+mobile-app/node_modules/
+mobile-app/platforms/
+mobile-app/plugins/

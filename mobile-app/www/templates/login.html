@@ -1,0 +1,36 @@
+<ion-view view-title="Log in" ng-controller="LoginController as loginCtrl">
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click="loginCtrl.advancedSettings()">
+      <i class="ion-gear-b"></i> Advanced settings
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="">
+    <form name="loginForm">
+      <ion-list>
+        <label class="item item-input" ng-show="loginCtrl.editProxyServer">
+          <span class="input-label">Proxy server</span>
+          <input type="url" ng-model="loginCtrl.proxyServer" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Forum address</span>
+          <input type="text" ng-model="loginCtrl.address" required>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Nickname</span>
+          <input type="text" ng-model="loginCtrl.nickname" required>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginCtrl.password" required>
+        </label>
+      </ion-list>
+      <div class="bar bar-footer">
+        <button class="button button-stable" ng-disabled="loginForm.$invalid"
+                ng-click="loginCtrl.login()">Log in
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
